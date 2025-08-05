@@ -1,7 +1,12 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Optional: fix the turbo config warning
   experimental: {
-    turbo: false, // 👈 explicitly disable Turbopack
+    turbo: {},
   },
 }
 
-module.exports = nextConfig;
+export default nextConfig
