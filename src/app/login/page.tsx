@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
-import { Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ShieldCheck, Loader2 } from 'lucide-react'
 
 export default function Login() {
   const router = useRouter()
@@ -11,15 +11,18 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+    setLoading(true)
 
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
       setError(error.message)
+      setLoading(false)
     } else {
       router.replace('/dashboard')
     }
@@ -50,6 +53,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-10 pr-3 py-2 border rounded-md shadow-sm text-sm focus:outline-none focus:ring focus:border-blue-500 text-gray-800 bg-white"
               required
+              disabled={loading}
             />
           </div>
 
@@ -63,12 +67,14 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-2 border rounded-md shadow-sm text-sm focus:outline-none focus:ring focus:border-blue-500 text-gray-800 bg-white"
               required
+              disabled={loading}
             />
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
               className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-gray-700"
               aria-label="Toggle password visibility"
+              disabled={loading}
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
@@ -80,9 +86,13 @@ export default function Login() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 cursor-pointer text-white text-sm font-semibold py-2.5 rounded-md transition"
+            disabled={loading}
+            className={`w-full flex justify-center items-center gap-2 ${
+              loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+            } text-white text-sm font-semibold py-2.5 rounded-md transition`}
           >
-            Log In
+            {loading && <Loader2 className="animate-spin h-5 w-5" />}
+            {loading ? 'Logging in...' : 'Log In'}
           </button>
         </form>
       </div>
