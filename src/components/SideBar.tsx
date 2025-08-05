@@ -108,7 +108,7 @@ export default function Layout({ children }: Props) {
 
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-4 py-2 rounded text-left hover:bg-gray-800 hover:border-l-4 hover:border-red-400 transition-all"
+                className="flex items-center gap-3 px-4 py-2 cursor-pointer rounded text-left hover:bg-gray-800 hover:border-l-4 hover:border-red-400 transition-all"
               >
                 <LogOut size={18} />
                 <span>Logout</span>
