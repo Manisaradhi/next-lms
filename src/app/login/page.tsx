@@ -21,7 +21,7 @@ export default function Login() {
     if (error) {
       setError(error.message)
     } else {
-      router.push('/dashboard')
+      router.replace('/dashboard')
     }
   }
 
