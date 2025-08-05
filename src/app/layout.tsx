@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oakya LMS",
+  title: "Next LMS",
   description: "A modern learning platform built with Next.js and Supabase",
 };
 
